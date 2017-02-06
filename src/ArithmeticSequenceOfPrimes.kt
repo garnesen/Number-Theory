@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
     val kb = Scanner(System.`in`)
     // Get the number from stdin (user input). The sieve will find primes up to this number.
     val maxNumber = kb.nextInt()
-    // Perform the sieve and store the result
+    // Perform the sieve and store the result.
     val primes = sieve(maxNumber)
 
     val sequences = primes.mapIndexed { i, p ->
