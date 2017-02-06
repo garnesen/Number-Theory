@@ -33,6 +33,7 @@ fun main(args: Array<String>) {
     // Perform the sieve and store the result.
     val primes = sieve(maxNumber)
 
+    // Find all sequences of primes greater than or equal to three.
     val sequences = primes.mapIndexed { i, p ->
         primes.subList(i+1, primes.size).map {
             val dist = it - p
