@@ -3,6 +3,7 @@
  * Number Theory
  */
 
+import java.io.File
 import java.util.Scanner
 
 /**
@@ -32,7 +33,7 @@ fun main(args: Array<String>) {
     // Perform the sieve and store the result
     val primes = sieve(maxNumber)
 
-    primes.mapIndexed { i, p ->
+    val sequences = primes.mapIndexed { i, p ->
         primes.subList(i+1, primes.size).map {
             val dist = it - p
             fun findPrimes(list: List<Int>): List<Int> {
@@ -43,5 +44,12 @@ fun main(args: Array<String>) {
             }
             findPrimes(listOf(p, it))
         }.filter { it.size >= 3 }
-    }.flatten().sortedBy { it.size }.forEach { println("${it.size} $it") }
+    }.flatten().sortedBy { it.size }
+
+    // Print results to a file.
+    File("results/ArithmeticSequenceOfPrimes.txt").printWriter().use { out ->
+        sequences.forEach {
+            out.println("${it.size} $it")
+        }
+    }
 }
