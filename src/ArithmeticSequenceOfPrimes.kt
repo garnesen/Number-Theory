@@ -5,6 +5,8 @@
 
 import java.io.File
 import java.util.Scanner
+import java.util.stream.Collectors
+import java.util.stream.IntStream
 
 /**
  * Performs the sieve of Eratosthenes up to n. Returns the list of leftover primes.
@@ -34,21 +36,22 @@ fun main(args: Array<String>) {
     val primes = sieve(maxNumber)
 
     // Find all sequences of primes greater than or equal to three.
-    val sequences = primes.mapIndexed { i, p ->
-        primes.subList(i+1, primes.size).map {
-            val dist = it - p
+    val sequences = IntStream.range(0, primes.size-1).parallel().mapToObj { i ->
+        primes.subList(i+1, primes.size).map { it ->
+            val dist = it - primes[i]
             fun findPrimes(list: List<Int>): List<Int> {
-                if (primes.contains(p + dist * list.size)) {
-                    return findPrimes(list + (p + dist * list.size))
+                if (primes.contains(primes[i] + dist * list.size)) {
+                    return findPrimes(list + (primes[i] + dist * list.size))
                 }
                 return list
             }
-            findPrimes(listOf(p, it))
+            findPrimes(listOf(primes[i], it))
         }.filter { it.size >= 3 }
-    }.flatten().sortedBy { it.size }
+    }.collect(Collectors.toList<List<List<Int>>>()).flatten().sortedBy { it.size }
 
     // Print results to a file.
     File("results/ArithmeticSequenceOfPrimes.txt").printWriter().use { out ->
+        out.println("Sequences in the first ${primes.size} primes.")
         sequences.forEach {
             out.println("${it.size} $it")
         }
