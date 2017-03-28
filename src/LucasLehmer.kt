@@ -85,6 +85,8 @@ fun primesInRange(lower: Int, upper: Int): List<Int> {
         }
         return list
     }
-    return removeMultiples(list, 0).filter { it >= lower };
+
+    // Return the list of primes with only those in the range specified
+    return removeMultiples(list, 0).filter { it >= lower }
 }
 
