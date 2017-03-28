@@ -17,9 +17,9 @@ fun main(args: Array<String>) {
     // Create a scanner to read from stdin
     val kb = Scanner(System.`in`)
     // Read the lower bound of the input range
-    val lowerBound = kb.nextInt();
+    val lowerBound = kb.nextInt()
     // Read the upper bound of the input range
-    val upperBound = kb.nextInt();
+    val upperBound = kb.nextInt()
 
     // A list of primes from the input range
     val p = primesInRange(lowerBound, upperBound)
@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
 }
 
 fun lucasLehmerTest(file: PrintWriter, p: Int) {
-    file.println("Checking if the ${p}th Mersenne number is prime...");
+    file.println("Checking if the ${p}th Mersenne number is prime...")
 
     // Calculate the pth Mersenne number
     val mp = BigInteger.valueOf(2).pow(p).minus(BigInteger.ONE)
@@ -43,12 +43,12 @@ fun lucasLehmerTest(file: PrintWriter, p: Int) {
 
     // This is the start value of the remainder
     var r = BigInteger.valueOf(4)
-    file.println("r_1 = 4");
+    file.println("r_1 = 4")
 
     // Perform mod on the remainder variable using itself p-1 times
     for (i in 2..(p-1)) {
         r = r.multiply(r).minus(BigInteger.valueOf(2)).mod(mp)
-        file.println("r_$i = $r");
+        file.println("r_$i = $r")
     }
 
     // Check if the last remainder is 0
@@ -89,4 +89,3 @@ fun primesInRange(lower: Int, upper: Int): List<Int> {
     // Return the list of primes with only those in the range specified
     return removeMultiples(list, 0).filter { it >= lower }
 }
-
